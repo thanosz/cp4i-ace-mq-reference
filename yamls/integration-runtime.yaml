@@ -10,7 +10,7 @@ spec:
   configurations:
     - ace-simple-demo-policy
     - ace-simple-demo-sever-conf
-    - barauth
+    - bar-auth
   barURL:
     - https://filebin.net/jb122fdtw6udg17q/simple-demo.bar # REPLACE
   replicas: 1
