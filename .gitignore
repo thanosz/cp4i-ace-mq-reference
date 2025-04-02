@@ -2,4 +2,4 @@
 *.zip
 *.bar
 queuemanager/work
-configurations/*
+configurations/*.yaml
