@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: runtime
-          image:  docker.io/thanosz/ace-simple-demo
+          image:  <registry>/<repository>/<image>:<tag>  #REPLACE
           imagePullPolicy: Always
           resources:
             limits:
