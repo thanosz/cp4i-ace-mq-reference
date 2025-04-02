@@ -1,0 +1,17 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationRuntime
+metadata:
+  name: simple-demo
+spec:
+  license:
+    accept: true
+    license: L-KPRV-AUG9NC 
+    use: CloudPakForIntegrationNonProduction  
+  configurations:
+    - ace-simple-demo-policy
+    - ace-simple-demo-sever-conf
+    - barauth
+  barURL:
+    - https://filebin.net/jb122fdtw6udg17q/simple-demo.bar # REPLACE
+  replicas: 1
+  version: "13.0"

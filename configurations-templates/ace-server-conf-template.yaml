@@ -1,0 +1,9 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: ace-simple-demo-sever-conf
+spec:
+  type: serverconf
+  description: Default QMgr for ACE Flows (remote)
+  data: #REPLACE_ME#
+

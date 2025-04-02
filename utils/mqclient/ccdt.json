@@ -1,0 +1,20 @@
+{
+    "channel":
+    [
+        {
+            "name": "ACE.TO.MQ",
+            "clientConnection":
+            {
+                "connection":
+                [
+                    {
+                        "host": "queuemanager-1-ibm-mq",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "QUEUEMGR1"
+            },
+            "type": "clientConnection"
+        }
+   ]
+}

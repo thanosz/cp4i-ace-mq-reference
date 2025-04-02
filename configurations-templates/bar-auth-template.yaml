@@ -1,0 +1,8 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: bar-auth
+spec:
+  description: Authentication 
+  type: barauth
+  data: #REPLACE_ME#

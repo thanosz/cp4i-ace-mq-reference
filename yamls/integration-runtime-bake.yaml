@@ -1,0 +1,30 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationRuntime
+metadata:
+  name: simple-demo
+spec:
+  flowType:
+    toolkitFlow: true
+  license:
+    accept: true
+    license: L-XRNH-47FJAW
+    use: CloudPakForIntegrationNonProduction  
+  template:
+    spec:
+      containers:
+        - name: runtime
+          image:  docker.io/thanosz/ace-simple-demo
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+  configurations:
+    - ace-simple-demo-policy
+    - ace-simple-demo-sever-conf
+  replicas: 1
+  version: 12.0.12.4-r1
+

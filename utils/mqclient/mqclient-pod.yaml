@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mqclient-pod
+spec:
+  containers:
+  - name: mqclient
+    image: thanosz/qmclient
+    command:
+      - tail 
+      - -f
+      - /dev/null
+    imagePullPolicy: Always
+    securityContext:
+      allowPrivilegeEscalation: false

@@ -1,0 +1,1 @@
+remoteDefaultQueueManager: '{mq-policy}:mq-policy'

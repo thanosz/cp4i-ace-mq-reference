@@ -1,0 +1,9 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: ace-simple-demo-policy
+spec:
+  type: policyproject
+  description: Policy to connect to Demo Queue Manager
+  contents: >-
+    #REPLACE_ME#

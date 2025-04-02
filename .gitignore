@@ -1,0 +1,5 @@
+.project
+*.zip
+*.bar
+queuemanager/work
+configurations/*
