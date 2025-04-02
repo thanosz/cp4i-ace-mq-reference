@@ -7,7 +7,7 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 ##### 1. Create a new project, or switch to the project
 `oc new-project qmtest` 
 
-##### 2. Create queuemanager. See [here](queuemanager/README.md) for details
+##### 2. Create the queuemanager. See [here](queuemanager/README.md) for details. The relevant certificates, keys, keystores, and yaml files are located under work
 `pushd queuemanager; ./cp4i-mq-test.sh`
 
 ##### 3. Verify up and running
