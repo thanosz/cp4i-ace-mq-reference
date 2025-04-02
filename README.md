@@ -13,7 +13,7 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 ##### 3. Verify up and running
 `oc get all`
 
-##### 4. Test mutual authentication with the provided configuration. You need MQ developer tools for this. Check the message appear in queuemanager in cp4i
+##### 4. Test mutual authentication with the provided configuration. You need MQ developer tools for this. Check that the message appears in queuemanager in cp4i
 `pushd work; echo TEST | /opt/mqm/samp/bin/amqsputc MTLS.QUEUE QUEUEMGR1`
 
 ##### 5. Go to the root of repository
@@ -22,7 +22,7 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 ##### 6. Create the appconnect configurations. The files will be placed under configurations folder
 `utils/create-configurations.sh`
 
-##### 7. Apply all configuration yaml files
+##### 7. Apply the generated appconnect configuration yaml files
 `oc apply -f configurations/ace-config-policy-mq.yaml -f configurations/ace-server-conf.yaml -f configurations/bar-auth.yaml`
 
 ##### 8. Create the example ace flow bar file
@@ -42,7 +42,7 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 `curl -k https://simple-demo-https-qmtest.<CLUSTER_DOMAIN>/hello`
 
 ## Baking images
-##### 14. For baking images, use the supplied Dockerfile to build and push the image to your registry
+##### 14. If not using bar files and baking images is preferred, use the supplied Dockerfile to build and push the image to your registry
 `docker build --build-arg ACETAG=13.0.2.2-r2-20250315-121329 --build-arg PROJECT=simple-demo -t <registry>/<repo>/<image_name>:<tag> --push .`
 
 ##### 15. Replace image in `yamls/integration-runtime-bake.yaml` (manual action)
