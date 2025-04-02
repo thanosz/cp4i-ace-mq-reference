@@ -1,5 +1,7 @@
 # cp4i-ace-mq-reference
-Creates a TLS-enabled quemanager with an ACE.QUEUE for use with the included ACE application (replacement of IntegrationServer's LOCAL queue), an MTLS.QUEUE to demontrate mutual TLS authentication, an STLS.QUEUE (one way tls) to demonstrate TLS enabled clients connections providing specific username
+Creates a TLS-enabled quemanager hosting an ACE.QUEUE for use with the included ACE application (replacement of IntegrationServer's LOCAL queue), an MTLS.QUEUE to demonstrate mutual TLS authentication, an STLS.QUEUE (one way tls) to demonstrate TLS enabled clients connections providing specific username.
+
+Creates an IntegrationRuntime with a simple HTTP call that also adds a message to ACE.QUEUE
 
 # Steps
 ##### 1. Create a new project, or switch to the project
