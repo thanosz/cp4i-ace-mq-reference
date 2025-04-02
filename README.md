@@ -1,10 +1,11 @@
 # cp4i-ace-mq-reference
+Creates a TLS-enabled quemanager with an ACE.QUEUE for use with the included ACE application (replacement of IntegrationServer's LOCAL queue), an MTLS.QUEUE to demontrate mutual TLS authentication, an STLS.QUEUE (one way tls) to demonstrate TLS enabled clients connections providing specific username
 
-
+# Steps
 ##### 1. Create a new project, or switch to the project
 `oc new-project qmtest` 
 
-##### 2. Create queuemanager Also see [here](queuemanager/README.md)
+##### 2. Create queuemanager. See [here](queuemanager/README.md) for details
 `pushd queuemanager; ./cp4i-mq-test.sh`
 
 ##### 3. Verify up and running
@@ -25,22 +26,25 @@
 ##### 8. Create the example ace flow bar file
 `utils/create-bar.sh`
 
-##### 9. Copy the generated bar file to a public server
+##### 9. Copy the generated bar file to a your/public server (manual action)
 
-##### 10. Adjust configuration-sources/bar-auth.txt (leave as it is for no authentication). If you changed utils/create-configurations.sh rerun the following
+##### 10. Set username/password in `configuration-sources/bar-auth.txt` to download the bar file. No changes are required if the bar file can be downloaded anonymously (see [here](https://www.ibm.com/docs/en/app-connect/13.0?topic=types-barauth-type) for details). If you changed `configuration-sources/bar-auth.txt` rerun the following
 `utils/create-configurations.sh; oc apply -f configurations/bar-auth.yaml`
 
-
-##### 11. Replace barURL in yamls/integration-runtime.yaml
+##### 11. Replace barURL in `yamls/integration-runtime.yaml` (manual action)
 
 ##### 12. Apply the integration-runtime
 `oc apply -f yamls/integration-runtime.yaml`
 
-##### 13. For baking images, use the supplied Dockerfile to build and push the image to your registry
-`docker build -f Dockerfile.ace-server-build --build-arg ACETAG=13.0.2.2-r2-20250315-121329 -t <registry>/<repo>/<image_name>:<tag> --push .`
+##### 13. Test the ACE flow. Check the queue from CP4I that includes a new message
+`curl -k https://simple-demo-https-qmtest.<CLUSTER_DOMAIN>/hello`
 
-##### 14. Replace image in yamls/integration-runtime-bake.yaml
+## Baking images
+##### 14. For baking images, use the supplied Dockerfile to build and push the image to your registry
+`docker build --build-arg ACETAG=13.0.2.2-r2-20250315-121329 --build-arg PROJECT=simple-demo -t <registry>/<repo>/<image_name>:<tag> --push .`
 
-##### 15. apply the cofiguration
+##### 15. Replace image in `yamls/integration-runtime-bake.yaml` (manual action)
+
+##### 16. Apply the cofiguration
 `oc apply -f yamls/integration-runtime-bake.yaml`
 
