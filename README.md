@@ -8,7 +8,9 @@ Creates an IntegrationRuntime with a simple HTTP call that adds a message to MTL
 
 You can play arround by changing the mq-policy's parameters to use the different queues.
 
-It is expected that `openssl`, `oc` and `runmqakm` utility from MQ's developers package is availbale on the system
+It is expected that `openssl`, `oc` and `runmqakm` utility from MQ's developers package is available on the system.
+
+The current working directory is important. Please use the commands as is. Your root folder is the repository folder
 
 # Steps
 #### 1. Create a new project, or switch to the project
