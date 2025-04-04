@@ -1,7 +1,7 @@
 # cp4i-ace-mq-reference
 Creates a TLS-enabled quemanager to be used with the included ACE application (replacement of IntegrationServer's LOCAL queue). It hosts an ACE.QUEUE and an STLS.QUEUE (one way tls) with no authentication and an MTLS.QUEUE with mutual TLS authentication to demonstrate TLS enabled mq clients connections that are authenticated against cert's common name (CN=)
 
-Creates an IntegrationRuntime with a simple HTTP call that adds a message to MTLS.QUEUE. For MTLS a KDB certificate store is created from the commands in `queuemanager/cp4i-mq-test.sh`. The IntegrationRuntime defaults to the remoteQueue through the `server.conf.yaml` `remoteDefaultQueueManager` setting and the mq-policy xml and which sets the MTLS.QUEUE on the integrationRuntime. You can play arround by changing the mq-policy's parameters.
+Creates an IntegrationRuntime with a simple HTTP call that adds a message to MTLS.QUEUE. For MTLS a KDB certificate store is created from the commands in `queuemanager/cp4i-mq-test.sh`. The IntegrationRuntime is configured to use the remote queue through the `server.conf.yaml` `remoteDefaultQueueManager` setting and by defining the MQPolicy mq-policy xml. You can play arround by changing the mq-policy's parameters to use the different queues.
 
 It is expected that `openssl`, `oc` and `runmqakm` utility from MQ's developers package is availbale on the system
 
