@@ -49,14 +49,14 @@ The current working directory is important. Please use the commands as is. Your 
 #### 13. Test the ACE flow. Check the queue from CP4I that includes a new message
 `curl -k https://simple-demo-https-qmtest.<CLUSTER_DOMAIN>/hello`
 
-## Baking images
+# Baking images
 #### 14. If not using bar files and baking images is preferred, use the supplied Dockerfile to build and push the image to your registry
 `docker build --build-arg ACETAG=13.0.2.2-r2-20250315-121329 --build-arg PROJECT=simple-demo -t <registry>/<repo>/<image_name>:<tag> --push .`
 
 #### 15. Replace image in `yamls/integration-runtime-bake.yaml` (manual action)
 
-##### 16. Apply the cofiguration
+#### 16. Apply the cofiguration
 `oc apply -f yamls/integration-runtime-bake.yaml`
 
-## mqclient image/pod
+# mqclient image/pod
 As a bonus you can build an mqclient image with the supplied Dockerfile under `utils/mqclient`. You can then run a pod to access the queuemanger from within the cluster. The supplied `amqsput-go` binary is the [go implementation](https://github.com/ibm-messaging/mq-golang) of `amqsput`  which gives you a little bit more verbosity
