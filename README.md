@@ -57,4 +57,4 @@ It is expected that `openssl`, `oc` and `runmqakm` utility from MQ's developers 
 `oc apply -f yamls/integration-runtime-bake.yaml`
 
 ## mqclient image/pod
-As a bonus you can build an mqclient image with the supplied Dockerfile under `utils/mqclient`. You can then run a pod to access the queuemanger from within the cluster. The supplied `amqsput-go` binary is the [go implementation](https://github.com/ibm-messaging/mq-golang) of `amqsput`  which gives provides a little bit more verbosity
+As a bonus you can build an mqclient image with the supplied Dockerfile under `utils/mqclient`. You can then run a pod to access the queuemanger from within the cluster. The supplied `amqsput-go` binary is the [go implementation](https://github.com/ibm-messaging/mq-golang) of `amqsput`  which gives you a little bit more verbosity
