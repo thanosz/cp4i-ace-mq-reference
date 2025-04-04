@@ -2,7 +2,7 @@
     "channel":
     [
         {
-            "name": "ACE.TO.MQ",
+            "name": "ACE.TO.MQ.SVRCONN",
             "clientConnection":
             {
                 "connection":

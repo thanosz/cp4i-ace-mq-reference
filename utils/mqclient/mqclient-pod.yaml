@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: mqclient
-    image: thanosz/qmclient
+    image: thanosz/mqclient
     command:
       - tail 
       - -f

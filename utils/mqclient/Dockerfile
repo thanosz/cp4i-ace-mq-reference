@@ -1,14 +1,11 @@
 FROM ubuntu
-RUN apt -y update && apt -y install vim
-RUN mkdir /opt/mqm
-
-# get the MQ Linux libraries from https://ibm.biz/mq94redistclients
-ADD 9.4.2.0-IBM-MQC-Redist-LinuxX64.tar.gz /opt/mqm
-
-RUN mkdir /mqclient
-ADD amqsput ccdt.json mqclient.ini /mq/
-RUN export LD_LIBRARY_PATH=/opt/mqm/lib64
-RUN useradd -m -s /bin/bash than && chown -R than:than /mq
+RUN apt -y update && apt -y install vim wget
+RUN mkdir /opt/mqm /mqclient
 WORKDIR /mqclient
-CMD ["tail", "-f", "/dev/null"]
-USER than
+RUN wget https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqdev/redist/9.4.2.0-IBM-MQC-Redist-LinuxX64.tar.gz && \
+        tar -xf 9.4.2.0-IBM-MQC-Redist-LinuxX64.tar.gz -C /opt/mqm/ && \
+        rm 9.4.2.0-IBM-MQC-Redist-LinuxX64.tar.gz
+ADD amqsput-go ccdt.json mqclient.ini /mqclient
+RUN export LD_LIBRARY_PATH=/opt/mqm/lib64; export PATH=/opt/mqm/samp/bin:$PATH
+RUN useradd -m -s /bin/bash user1 && chown -R user1:user1 /mqclient
+USER user1
