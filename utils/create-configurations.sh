@@ -13,3 +13,13 @@ sed "s|#REPLACE_ME#|${DATA}|g" configurations-templates/bar-auth-template.yaml >
 
 DATA=$(cat configurations-sources/server.conf.yaml | base64 -w 0)
 sed "s|#REPLACE_ME#|${DATA}|g" configurations-templates/ace-server-conf-template.yaml > configurations/ace-server-conf.yaml
+
+
+DATA=$(cat queuemanager/work/qm-client.kdb | base64 -w 0)
+sed "s|#REPLACE_ME#|${DATA}|g" configurations-templates/ace-config-mqclient-kdb.yaml > configurations/ace-config-mqclient-kdb.yaml
+
+DATA=$(cat queuemanager/work/qm-client.rdb | base64 -w 0)
+sed "s|#REPLACE_ME#|${DATA}|g" configurations-templates/ace-config-mqclient-rdb.yaml > configurations/ace-config-mqclient-rdb.yaml
+
+DATA=$(cat queuemanager/work/qm-client.sth | base64 -w 0)
+sed "s|#REPLACE_ME#|${DATA}|g" configurations-templates/ace-config-mqclient-sth.yaml > configurations/ace-config-mqclient-sth.yaml

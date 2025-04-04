@@ -1,0 +1,9 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: qm-client.rdb
+spec:
+  type: truststore
+  description: Cert store for mq client
+  contents: >-
+    #REPLACE_ME#

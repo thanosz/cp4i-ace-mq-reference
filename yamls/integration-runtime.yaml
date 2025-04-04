@@ -11,7 +11,10 @@ spec:
     - ace-simple-demo-policy
     - ace-simple-demo-sever-conf
     - bar-auth
+    - qm-client.kdb
+    - qm-client.rdb
+    - qm-client.sth
   barURL:
-    - https://filebin.net/jb122fdtw6udg17q/simple-demo.bar # REPLACE
+    - https://github.com/thanosz/ace-projects-demo/raw/refs/heads/main/simple-demo.bar
   replicas: 1
   version: "13.0"

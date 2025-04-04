@@ -5,13 +5,13 @@
     <destinationQueueManagerName>QUEUEMGR1</destinationQueueManagerName>
     <queueManagerHostname>queuemanager-1-ibm-mq</queueManagerHostname>
     <listenerPortNumber>1414</listenerPortNumber>
-    <channelName>ACE.TO.MQ.SVRCONN</channelName>
+    <channelName>MTLS.SVRCONN</channelName>
     <CCDTUrl></CCDTUrl>
     <securityIdentity></securityIdentity>
-    <useSSL>false</useSSL>
+    <useSSL>true</useSSL>
     <SSLPeerName></SSLPeerName>
-    <SSLCipherSpec></SSLCipherSpec>
-    <SSLCertificateLabel></SSLCertificateLabel>
+    <SSLCipherSpec>ANY_TLS12_OR_HIGHER</SSLCipherSpec>
+    <SSLCertificateLabel>qm-client</SSLCertificateLabel>
     <MQApplName>helloworld</MQApplName>
     <reconnectOption>default</reconnectOption>
   </policy>

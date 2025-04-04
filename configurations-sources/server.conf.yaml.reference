@@ -316,8 +316,8 @@ UserExits:
 
 BrokerRegistry:
   #brokerKeystoreType: 'PKCS12'                          # Key store type, can be 'JKS' or 'PKCS12'. Default is JKS.
-  #brokerKeystoreFile: 'qm-client.p12'                             # Location of the broker key store
-  #brokerKeystorePass: 'PASSWORD'     # Resource alias containing the key store password
+  #brokerKeystoreFile: 'qm-client'                             # Location of the broker key store
+  brokerKeystorePass: 'PASSWORD'     # Resource alias containing the key store password
   #brokerTruststoreType: 'PKCS12'                        # Trust store type, can be 'JKS' or 'PKCS12'. Default is JKS.
   #brokerTruststoreFile: 'qm-client.p12'                        # Location of the broker trust store
   #brokerTruststorePass: 'PASSWORD' # Resource alias containing the trust store password
@@ -332,7 +332,7 @@ BrokerRegistry:
   #httpsConnectorPortRange: ''
   #brokerKerberosConfigFile: ''
   #brokerKerberosKeytabFile: ''
-  #mqKeyRepository: '/home/aceuser/ace-server/custom-keystore'
+  mqKeyRepository: '/home/aceuser/customstore/qm-client'
 
 ResourceManagers:
   JVM:

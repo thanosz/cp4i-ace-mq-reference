@@ -7,6 +7,7 @@ openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out ca.key
 openssl req -x509 -new -nodes -key ca.key -sha512 -days 30 -subj "/CN=example-selfsigned-ca" -out ca.crt
 openssl req -new -nodes -out queuemanager.csr -newkey rsa:4096 -keyout queuemanager.key -subj '/CN=queuemanager'
 openssl x509 -req -in queuemanager.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out queuemanager.crt -days 3650 -sha512
+cat queuemanager.crt ca.crt > queuemanager-chain.crt
 
 oc delete secret queuemanager
 oc create secret generic queuemanager --type="kubernetes.io/tls" --from-file=tls.key=queuemanager.key --from-file=tls.crt=queuemanager.crt --from-file=ca.crt
@@ -15,7 +16,12 @@ oc create secret generic queuemanager --type="kubernetes.io/tls" --from-file=tls
 openssl req -new -nodes -out qm-client.csr -newkey rsa:4096 -keyout qm-client.key -subj '/CN=qm-client'
 openssl x509 -req -in qm-client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out qm-client.crt -days 3650 -sha512
 openssl pkcs12 -export -in "qm-client.crt" -name "qm-client" -certfile "ca.crt" -inkey "qm-client.key" -out "qm-client.p12" -passout pass:PASSWORD
-cat qm-client.crt ca.crt > qm-client-chain.crt
+cat qm-client.crt ca.crt qm-client.key > qm-client-chain.crt
+
+# Create KDB for IntergationRuntime mq-client
+runmqakm -keydb -create -db qm-client.kdb -type cms -stash
+runmqakm -cert -add -db qm-client.kdb -label queuemanager -file queuemanager-chain.crt -format ascii -stashed
+runmqakm -cert -import -target qm-client.kdb -file qm-client.p12 -target_stashed -pw PASSWORD -new_label ibmwebspheremq
 
 oc delete cm queuemanager-configmap
 cat << EOF > queuemanager-configmap.yaml
@@ -31,14 +37,14 @@ data:
     ALTER AUTHINFO(SYSTEM.DEFAULT.AUTHINFO.IDPWOS)  AUTHTYPE(IDPWOS) CHCKCLNT(NONE)
     REFRESH SECURITY TYPE(CONNAUTH)
 
-    DEFINE CHANNEL(MTLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(REQUIRED) SSLCIPH('ANY_TLS13_OR_HIGHER') REPLACE
+    DEFINE CHANNEL(MTLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(REQUIRED) SSLCIPH('ANY_TLS12_OR_HIGHER') REPLACE
     DEFINE QLOCAL(MTLS.QUEUE) REPLACE
     SET CHLAUTH(MTLS.SVRCONN) TYPE(SSLPEERMAP) SSLPEER('CN=*') USERSRC(NOACCESS) ACTION(REPLACE)
     SET CHLAUTH(MTLS.SVRCONN) TYPE(SSLPEERMAP) SSLPEER('CN=qm-client') USERSRC(MAP) MCAUSER('app1') ACTION(REPLACE)
-    SET AUTHREC PRINCIPAL('app1') OBJTYPE(QMGR) AUTHADD(CONNECT,INQ)
-    SET AUTHREC PROFILE('MTLS.QUEUE') PRINCIPAL('app1') OBJTYPE(QUEUE) AUTHADD(BROWSE,PUT,GET,INQ)
+    SET AUTHREC PRINCIPAL('app1') OBJTYPE(QMGR) AUTHADD(ALL)
+    SET AUTHREC PROFILE('MTLS.QUEUE') PRINCIPAL('app1') OBJTYPE(QUEUE) AUTHADD(ALL)
 
-    DEFINE CHANNEL(STLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(OPTIONAL) SSLCIPH('ANY_TLS13_OR_HIGHER') TRPTYPE(TCP) REPLACE
+    DEFINE CHANNEL(STLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(OPTIONAL) SSLCIPH('ANY_TLS12_OR_HIGHER') TRPTYPE(TCP) REPLACE
     DEFINE QLOCAL(STLS.QUEUE) REPLACE
     SET AUTHREC PRINCIPAL('than') OBJTYPE(QMGR) AUTHADD(ALL)
     SET AUTHREC PROFILE(STLS.QUEUE) PRINCIPAL('than') OBJTYPE(QUEUE) AUTHADD(BROWSE,PUT,GET,INQ)

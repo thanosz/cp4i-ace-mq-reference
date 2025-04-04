@@ -1,1 +1,3 @@
 remoteDefaultQueueManager: '{mq-policy}:mq-policy'
+BrokerRegistry:
+  mqKeyRepository: '/home/aceuser/truststores/qm-client'

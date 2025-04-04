@@ -8,6 +8,7 @@ USER root
 ADD . /
 RUN export LICENSE=accept && \
     source /opt/ibm/ace-1*/server/bin/mqsiprofile && \
+    rm /ace-projects/${PROJECT}/*policy* && \
     ibmint package --input-path /ace-projects --project ${PROJECT} --output-bar-file /tmp/${PROJECT}.bar && \
     ibmint deploy --input-bar-file /tmp/${PROJECT}.bar --output-work-directory /home/aceuser/ace-server/
 

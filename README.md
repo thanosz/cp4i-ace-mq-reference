@@ -1,13 +1,15 @@
 # cp4i-ace-mq-reference
-Creates a TLS-enabled quemanager hosting an ACE.QUEUE for use with the included ACE application (replacement of IntegrationServer's LOCAL queue), an MTLS.QUEUE to demonstrate mutual TLS authentication, an STLS.QUEUE (one way tls) to demonstrate TLS enabled clients connections providing specific username.
+Creates a TLS-enabled quemanager to be used with the included ACE application (replacement of IntegrationServer's LOCAL queue). It hosts an ACE.QUEUE and an STLS.QUEUE (one way tls) with no authentication and an MTLS.QUEUE with mutual TLS authentication to demonstrate TLS enabled mq clients connections that are authenticated against cert's common name (CN=)
 
-Creates an IntegrationRuntime with a simple HTTP call that also adds a message to ACE.QUEUE
+Creates an IntegrationRuntime with a simple HTTP call that adds a message to MTLS.QUEUE. For MTLS a KDB certificate store is created from the commands in `queuemanager/cp4i-mq-test.sh`. The IntegrationRuntime defaults to the remoteQueue through the `server.conf.yaml` `remoteDefaultQueueManager` setting and the mq-policy xml and which sets the MTLS.QUEUE on the integrationRuntime. You can play arround by changing the mq-policy's parameters.
+
+It is expected that `openssl`, `oc` and `runmqakm` utility from MQ's developers package is availbale on the system
 
 # Steps
 ##### 1. Create a new project, or switch to the project
 `oc new-project qmtest` 
-
-##### 2. Create the queuemanager. See [here](queuemanager/README.md) for details. The relevant certificates, keys, keystores, and yaml files are located under work
+		
+##### 2. Create the queuemanager. See [here](queuemanager/README.md) for details. The relevant certificates, keys, keystores, and yaml files are located under work. Wait for the script ro finish. Ignore any errors.
 `pushd queuemanager; ./cp4i-mq-test.sh`
 
 ##### 3. Verify up and running
@@ -23,15 +25,14 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 `utils/create-configurations.sh`
 
 ##### 7. Apply the generated appconnect configuration yaml files
-`oc apply -f configurations/ace-config-policy-mq.yaml -f configurations/ace-server-conf.yaml -f configurations/bar-auth.yaml`
+`for i in $(ls configurations); do oc apply -f configurations/$i; done`
 
 ##### 8. Create the example ace flow bar file
 `utils/create-bar.sh`
 
-##### 9. Copy the generated bar file to a your/public server (manual action)
+##### 9. Copy the generated bar file to your/public server (manual action)
 
-##### 10. Set username/password in `configuration-sources/bar-auth.txt` to download the bar file. No changes are required if the bar file can be downloaded anonymously (see [here](https://www.ibm.com/docs/en/app-connect/13.0?topic=types-barauth-type) for details). If you changed `configuration-sources/bar-auth.txt` rerun the following
-`utils/create-configurations.sh; oc apply -f configurations/bar-auth.yaml`
+##### 10. Set username/password in `configuration-sources/bar-auth.txt` to download the bar file. No changes are required if the bar file can be downloaded anonymously (see [here](https://www.ibm.com/docs/en/app-connect/13.0?topic=types-barauth-type) for details). If you changed `configuration-sources/bar-auth.txt` rerun step 6 and 7
 
 ##### 11. Replace barURL in `yamls/integration-runtime.yaml` (manual action)
 
@@ -49,4 +50,5 @@ Creates an IntegrationRuntime with a simple HTTP call that also adds a message t
 
 ##### 16. Apply the cofiguration
 `oc apply -f yamls/integration-runtime-bake.yaml`
+
 

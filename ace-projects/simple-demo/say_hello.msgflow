@@ -12,10 +12,10 @@
       <nodes xmi:type="ComIbmWSReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="407,132">
         <translation xmi:type="utility:ConstantString" string="reply"/>
       </nodes>
-      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="777,265" queueName="ACE.QUEUE" policyUrl="{mq-policy}:mq-policy">
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="777,265" queueName="MTLS.QUEUE" policyUrl="{mq-policy}:mq-policy">
         <translation xmi:type="utility:ConstantString" string="MQ Output"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="12,51" URLSpecifier="/hello" useHTTPS="true">
+      <nodes xmi:type="ComIbmWSInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="12,51" URLSpecifier="/hello">
         <translation xmi:type="utility:ConstantString" string="HTTP Input"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="574,265" computeExpression="esql://routine/#say_hello_world.Main">

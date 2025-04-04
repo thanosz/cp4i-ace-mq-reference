@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: runtime
-          image:  <registry>/<repository>/<image>:<tag>  #REPLACE
+          image: <registry>/<repository>/<image>:<tag>  #REPLACE
           imagePullPolicy: Always
           resources:
             limits:
@@ -25,6 +25,9 @@ spec:
   configurations:
     - ace-simple-demo-policy
     - ace-simple-demo-sever-conf
+    - qm-client.kdb
+    - qm-client.rdb
+    - qm-client.sth
   replicas: 1
   version: 12.0.12.4-r1
 
