@@ -7,6 +7,5 @@ RUN wget https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messagin
         rm 9.4.2.0-IBM-MQC-Redist-LinuxX64.tar.gz && \
         ln -s /opt/mqm/samp/bin/amqsput .
 ADD amqsput-go ccdt.json mqclient.ini /mqclient
-RUN export LD_LIBRARY_PATH=/opt/mqm/lib64
 RUN useradd -m -s /bin/bash user1 && chown -R user1:user1 /mqclient
 USER user1
