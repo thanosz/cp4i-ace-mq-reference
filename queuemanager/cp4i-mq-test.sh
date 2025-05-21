@@ -44,10 +44,16 @@ data:
     SET AUTHREC PRINCIPAL('app1') OBJTYPE(QMGR) AUTHADD(ALL)
     SET AUTHREC PROFILE('MTLS.QUEUE') PRINCIPAL('app1') OBJTYPE(QUEUE) AUTHADD(ALL)
 
-    DEFINE CHANNEL(STLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(OPTIONAL) SSLCIPH('ANY_TLS12_OR_HIGHER') TRPTYPE(TCP) REPLACE
+    DEFINE CHANNEL(STLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(OPTIONAL) SSLCIPH('ANY_TLS12_OR_HIGHER') TRPTYPE(TCP) MCAUSER('mqm') REPLACE
     DEFINE QLOCAL(STLS.QUEUE) REPLACE
-    SET AUTHREC PRINCIPAL('than') OBJTYPE(QMGR) AUTHADD(ALL)
-    SET AUTHREC PROFILE(STLS.QUEUE) PRINCIPAL('than') OBJTYPE(QUEUE) AUTHADD(BROWSE,PUT,GET,INQ)
+    SET CHLAUTH(STLS.SVRCONN) TYPE(BLOCKUSER) USERLIST('nobody') ACTION(ADD)
+
+    * The following defines the same STLS queue as above but the MQ is instructed to validate that the
+    * request comes from a specific user. This would be the OS user that is logged in and uses the MQ Client
+    * DEFINE CHANNEL(STLS.SVRCONN) CHLTYPE(SVRCONN) SSLCAUTH(OPTIONAL) SSLCIPH('ANY_TLS12_OR_HIGHER') TRPTYPE(TCP) REPLACE
+    * DEFINE QLOCAL(STLS.QUEUE) REPLACE
+    * SET AUTHREC PRINCIPAL('peter') OBJTYPE(QMGR) AUTHADD(ALL)
+    * SET AUTHREC PROFILE(STLS.QUEUE) PRINCIPAL('peter') OBJTYPE(QUEUE) AUTHADD(BROWSE,PUT,GET,INQ)
 
   queuemanager.ini: |
     Service:
@@ -67,7 +73,7 @@ metadata:
   name: queuemanager-1
 spec:
   license:
-    accept: true  
+    accept: true
     license: L-QYVA-B365MB
     use: Production
   queueManager:
@@ -106,7 +112,7 @@ oc apply -f queuemanager-1.yaml
 
 while true; do
         HOSTNAME=$(oc get route queuemanager-1-ibm-mq-qm --template="{{.spec.host}}")
-        if [[ $? -ne 0 ]]; then 
+        if [[ $? -ne 0 ]]; then
                sleep 5
         else
                 break
@@ -143,14 +149,14 @@ cat << EOF > ccdt.json
 EOF
 
 
-cat << EOF > mqclient.ini 
+cat << EOF > mqclient.ini
 Channels:
   ChannelDefinitionDirectory=.
   ChannelDefinitionFile=ccdt.json
 SSL:
   OutboundSNI=HOSTNAME
   SSLKeyRepository=qm-client.p12
-  SSLKeyRepositoryPassword=PASSWORD 
+  SSLKeyRepositoryPassword=PASSWORD
 EOF
 
 
